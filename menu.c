@@ -7,7 +7,7 @@
 
 int main(void){
     setlocale(LC_ALL,"");  // Usa padrão do OS.
-    int O,v,temp; char nome[30]; no* n;
+    int O,v,temp; char nome[1024],nome_[1024]; no* n = NULL,*m = NULL;
     do{    
         fflush(stdin);
         printf("Digite 0 - Incluir Elemento na Árvore AVL\n");
@@ -23,27 +23,54 @@ int main(void){
         fflush(stdin);
         switch(O){       
             case 0:                
-                printf("Digite a chave.\n");
-                scanf("%d",&temp);
+                printf("Digite a chave , a marca e o modelo!\n");
+                scanf("%d",&temp);            
                 fflush(stdin);
+                fgets(nome,1024,stdin);
+                fflush(stdin);
+                fgets(nome_,1024,stdin);
                 if(v = 0){
-                   n = novoNo(temp);
+                   n = novoNo(temp,nome,nome_);
                 }else{
-                   inserir(n,temp);
+                   inserir(n,temp,nome,nome_);
                 }           
                 v = 1;   
                 break;
             case 1:    
-
+                printf("Digite a chave do elemento!\n");
+                scanf("%d",&temp);
+                fflush(stdin);
+                m = buscaNo_Chave(n,temp);
+                printf("\nInformações do elemento!\n");
+                imprime(m,2);
                 break;
             case 2:    
-
+                printf("Digite a chave do elemento!\n");
+                scanf("%d",&temp);
+                fflush(stdin);
+                m = buscaNo_Chave(n,temp);
+                int chave = getChave(m);               
+                printf("Digite os novos valores do elemento! Marca - Modelo , Respectivamente\n");
+                fgets(nome,1024,stdin);
+                fflush(stdin);
+                fgets(nome_,1024,stdin);
+                removerNo(n,chave);
+                if(v == 0)
+                   n = novoNo(chave,nome,nome_);
+                else
+                   inserir(n,chave,nome,nome_);
+                v = 1;   
                 break;
             case 3:    
-
+                printf("Digite a chave do elemento!\n");
+                scanf("%d",&temp);
+                fflush(stdin);
+                removerNo(n,temp);
+                printf("\n Elemento Removido! \n");
                 break;
             case 4:    
-
+                printf("\n Árvore AVL : \n");
+                imprime(n,2);
                 break;
             case 5:      
                 printf("A Quantidade de elementos é :\n");
@@ -59,6 +86,7 @@ int main(void){
                 printf("\n\n");
                 break; 
             case 8:
+                finalizaArvore(n); finalizaArvore(m);
                 printf("Obrigado!\n"); 
                 return EXIT_SUCCESS;
                 break;             

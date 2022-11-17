@@ -1,6 +1,10 @@
 typedef struct no no;
 typedef struct data data;
 
+int finalizaArvore(no* raiz);
+int getChave(no* n);
+no* buscaNo_Marca(no* raiz,char *nome);
+no* buscaNo_Chave(no* raiz,int key);
 int quantidadeNos(no* n);
 no* minValueNode(no* n);
 no* removerNo(no *raiz, int x);

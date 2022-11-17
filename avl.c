@@ -15,7 +15,55 @@ struct no{
 struct data{
    char Marca[1024],Modelo[1024];   
 };
-
+int finalizaArvore(no* raiz){
+     if(raiz == NULL)
+        return -1;
+     else{     
+        finalizaArvore(raiz->esquerda);
+        finalizaArvore(raiz->direita);
+        free(raiz);
+     }       
+}
+/*
+   Retorna a chave do nó.
+*/
+int getChave(no* n){
+   return n->key;
+}
+/*
+   Busca um nó baseado na Marca
+   e o retorna.
+*/
+no* buscaNo_Marca(no* raiz,char *nome){
+    if(raiz == NULL)
+       return NULL;
+    if(strcmp(raiz->data->Marca,nome) == 0){
+       printf("\nNó encontrado.\n");
+       return raiz;  
+    }     
+    else{      
+       buscaNo_Marca(raiz->esquerda,nome);
+       buscaNo_Marca(raiz->direita,nome);
+    } 
+}
+/*
+   Busca um nó baseado na chave
+   e o retorna.
+*/
+no* buscaNo_Chave(no* raiz,int key){
+    if(raiz == NULL){
+       printf("\nNó não encontrado.\n");
+       return raiz;  
+    }     
+    if (key < raiz->key)
+       raiz->esquerda = removerNo(raiz->esquerda, key);
+    else if (key > raiz->key)
+       raiz->direita = removerNo(raiz->direita, key);
+    else{
+       printf("\nNó encontrado!\n");
+       return raiz;
+    }
+}
 no* removerNo(no *raiz, int x){
    no* temp;
    if (raiz == NULL)
